@@ -40,7 +40,7 @@ public class MainApp {
         }
 
         System.out.println("--------------");
-        System.out.println(userService.getUserByCar("Honda", 2018));
+        System.out.println(userService.getUserByCarSeries("Honda", 2018));
         System.out.println("--------------");
 
 

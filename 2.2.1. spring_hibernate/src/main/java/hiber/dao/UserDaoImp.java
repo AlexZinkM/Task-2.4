@@ -15,7 +15,9 @@ import java.util.List;
 @Repository
 public class UserDaoImp implements UserDao {
 
-    String hql = "SELECT u FROM User u JOIN u.car c WHERE c.model = :model AND c.series = :series";
+    //String hql = "SELECT u FROM User u JOIN u.car c WHERE c.model = :model AND c.series = :series";
+    String hql = "SELECT u FROM User u WHERE u.car.model = :model AND u.car.series = :series";
+
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -35,17 +37,10 @@ public class UserDaoImp implements UserDao {
 
     @Transactional
     @Override
-    public User getUserByCar(String model, int series) {
+    public User getUserByCarSeries(String model, int series) {
         TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery(hql, User.class);
-        query.setParameter("model", model);
-        query.setParameter("series", series);
+        return query.setParameter("model", model).setParameter("series", series).getSingleResult();
 
-        List<User> resultList = query.getResultList();
-        if (!resultList.isEmpty()) {
-            return resultList.get(0);
-        }
-
-        return null;
     }
 
 
